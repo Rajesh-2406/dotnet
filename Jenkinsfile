@@ -32,8 +32,8 @@ pipeline {
          aws configure set default.region ap-south-1
          DOCKER_LOGIN_PASSWORD=$(aws ecr get-login-password  --region ap-south-1)
          docker login -u AWS -p $DOCKER_LOGIN_PASSWORD 794038216648.dkr.ecr.ap-south-1.amazonaws.com/demo
-	 docker build -t 794038216648.dkr.ecr.ap-south-1.amazonaws.com/demo:SAMPLE-PROJECT-${BUILD_NUMBER} .
-	 docker push 794038216648.dkr.ecr.ap-south-1.amazonaws.com/demo:SAMPLE-PROJECT-${BUILD_NUMBER}
+	     docker build -t 794038216648.dkr.ecr.ap-south-1.amazonaws.com/demo:SAMPLE-PROJECT-${BUILD_NUMBER} .
+	     docker push 794038216648.dkr.ecr.ap-south-1.amazonaws.com/demo:SAMPLE-PROJECT-${BUILD_NUMBER}
           
 	  '''
      }   
@@ -45,7 +45,11 @@ pipeline {
                   export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
                   export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
                   export AWS_DEFAULT_REGION=ap-south-1
-		  chmod +x changebuildnumber.sh
+		          aws --version
+
+
+
+		          chmod +x changebuildnumber.sh
                   ./changebuildnumber.sh $BUILD_NUMBER
                   aws eks --region ap-south-1 update-kubeconfig --name eks-cluster
                   cat deployment.yml
